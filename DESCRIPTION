@@ -1,18 +1,43 @@
 Package: BRFSSMissouri
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Cleans the Missouri BRFSS Data Into a Tidy Format
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Mitchell", "Fehr",
+      email = "mfehr7@gmail.com",
       role = c("aut", "cre")
+    ),
+    person(
+      "Jia Yee", "Wong",
+      email = "jiayeewongjy05@gmail.com",
+      role = c("aut")
+    ),
+    person(
+      "Brett", "Stewart",
+      email = "brettstewart1000@gmail.com",
+      role = c("aut")
+    ),
+    person(
+      "Jack", "Stewart",
+      email = "jackstew65@gmail.com",
+      role = c("aut")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Description: Cleans Missouri data from the 2023 and 2024 BRFSS surveys.
+    Specifically, the cleaning focuses on the Tobacco Use and Cognitive Decline modules.
+    This package imputes related columns, providing three different imputed versions
+    of the column, as well as the original unimputed column data.
+    Other data present in the package includes basic survery information, such as date,
+    and demographics.
+    The data included in this package is split into four datasets--missouri_brfss,
+    demographics, tobacco_use, and cognitive_decline. 
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/mfehr7/BRFSSMissouri
 BugReports: https://github.com/mfehr7/BRFSSMissouri/issues
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends: 
+    R (>= 3.5)
