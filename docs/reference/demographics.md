@@ -11,7 +11,7 @@ demographics
 
 ## Format
 
-A data frame with 14,528 rows and 14 variables:
+A data frame with 14,528 rows and 18 variables:
 
 - SEQNO:
 
@@ -68,6 +68,22 @@ A data frame with 14,528 rows and 14 variables:
 - MENTHLTH:
 
   mental health
+
+- CHCOCNC1:
+
+  melanoma or other types of cancer
+
+- ALCDAY4:
+
+  days in the past 30 had alcohol
+
+- MARJSMOK:
+
+  marijuana usage
+
+- ASTHMS1:
+
+  asthma status
 
 ## Source
 

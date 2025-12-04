@@ -50,12 +50,20 @@ brfss_2023_tob_cog <- brfss_2023 |>
 # Joining the two datasets for imputation / tidying
 brfss_tob_cog <- dplyr::bind_rows(brfss_2023_tob_cog, brfss_2024_tob_cog)
 
+# Turning the values of 7 (Don't know) and 9 (Refused) to NAs so that they are imputed too
+brfss_for_imp <- brfss_tob_cog |>
+  dplyr::mutate(
+    SMOKE100 = ifelse(SMOKE100 %in% c(7, 9), NA, SMOKE100),
+    ECIGNOW = ifelse(ECIGNOW %in% c(7, 9), NA, ECIGNOW),
+    CIMEMLO1 = ifelse(CIMEMLO1 %in% c(7, 9), NA, CIMEMLO1)
+  )
+
 #
 # Imputing
 #
 
 # Dry run to get the matrix skeleton, so that we can alter it for each column
-ini <- mice::mice(brfss_tob_cog, maxit = 0)
+ini <- mice::mice(brfss_for_imp, maxit = 0)
 pred <- ini$predictorMatrix
 # Reset the entire matrix to 0
 pred[,] <- 0
@@ -69,9 +77,12 @@ pred["SMOKE100", predictors] <- 1
 pred["ECIGNOW", predictors] <- 1
 pred["CIMEMLO1", predictors] <- 1
 
+# Viewing the predictor matrix to confirm it looks right
+print(pred[c("SMOKE100", "ECIGNOW", "CIMEMLO1"), ])
+
 # Actual imputation
 brfss_imputed <- mice::mice(
-  brfss_tob_cog,
+  brfss_for_imp,
   m = 3,
   predictorMatrix = pred,
   method = "pmm",
@@ -99,8 +110,6 @@ for(i in 1:3) {
 #
 # Testing
 #
-# summary(brfss_complete)
-#
 # sum(is.na(brfss_complete$`SMOKE100`))
 # sum(is.na(brfss_complete$`SMOKE100_IMP1`))
 # sum(is.na(brfss_complete$`SMOKE100_IMP2`))
@@ -113,8 +122,6 @@ for(i in 1:3) {
 # sum(is.na(brfss_complete$`CIMEMLO1_IMP1`))
 # sum(is.na(brfss_complete$`CIMEMLO1_IMP2`))
 # sum(is.na(brfss_complete$`CIMEMLO1_IMP3`))
-#
-# dim(brfss_complete)
 
 
 ###################################
@@ -122,7 +129,7 @@ for(i in 1:3) {
 ###################################
 
 # Creation of Demographics Dataset
-demographics <- brfss_complete |> dplyr::select(SEQNO, AGE80, CAGEG, CRACE1, MARITAL, EDUCA, INCOME3, EMPLOY1, CHILDREN, VETERAN3, PREGNANT, WEIGHT2, GENHLTH, MENTHLTH)
+demographics <- brfss_complete |> dplyr::select(SEQNO, MARITAL, EDUCA, VETERAN3, EMPLOY1, CHILDREN, INCOME3, PREGNANT, WEIGHT2, CRACE1, ASTHMS1, CAGEG, AGE80, CHCOCNC1, ALCDAY4, MARJSMOK, GENHLTH, MENTHLTH)
 
 # Creation of Cognitive Decline Dataset
 cognitive_decline <- brfss_complete |> dplyr::select(SEQNO, CIMEMLO1, CIMEMLO1_IMP1,CIMEMLO1_IMP2,CIMEMLO1_IMP3)
