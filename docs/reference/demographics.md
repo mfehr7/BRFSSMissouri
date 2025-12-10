@@ -43,7 +43,7 @@ A data frame with 14,528 rows and 18 variables:
 
 - PREGNANT:
 
-  pregnancy status1
+  pregnancy status
 
 - WEIGHT2:
 
