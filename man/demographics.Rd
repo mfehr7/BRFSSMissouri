@@ -14,7 +14,7 @@ A data frame with 14,528 rows and 18 variables:
 \item{EMPLOY1}{employment status}
 \item{CHILDREN}{number of children in household}
 \item{INCOME3}{income level}
-\item{PREGNANT}{pregnancy status1}
+\item{PREGNANT}{pregnancy status}
 \item{WEIGHT2}{reported weight in pounds}
 \item{CRACE1}{child non-hispanic race including multiracial}
 \item{CAGEG}{child age}
